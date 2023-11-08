@@ -1,28 +1,20 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+const currBackground = 'snow.jpg'
 </script>
 
 <template>
-  <header>
-    <img
-      alt="Weather application logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <div class="wrapper snow">
+    <RouterView />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.wrapper {
+  display: grid;
+  grid-template-columns: 60% 40%;
+}
+.snow {
+  background-size: cover;
+  background-image: url('@/assets/background/snow.jpeg');
+}
+</style>
