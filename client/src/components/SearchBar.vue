@@ -7,10 +7,16 @@
       placeholder="Search location"
       @input="debouncedInput"
     />
-    <div>
-      <div v-if="isLoading">loading...</div>
-      <div v-else>{{ availableLocations }}</div>
-    </div>
+    <TransitionGroup name="list">
+      <div v-if="availableLocations.length" class="container">
+        <TransitionGroup name="list">
+          <span v-for="location in availableLocations" :key="location.id" class="location">{{
+            location.name
+          }}</span>
+        </TransitionGroup>
+      </div>
+      <span v-if="!availableLocations.length && !isLoading">There is no place with that name</span>
+    </TransitionGroup>
   </section>
 </template>
 
@@ -18,11 +24,22 @@
 import { apiUrl, debounce } from '@/utils/utils'
 import { ref } from 'vue'
 
+type Location = {
+  id: number
+  name: string
+  region: string
+  country: string
+  lat: number
+  lon: number
+  url: string
+}
+
 const input = ref('')
-const availableLocations = ref([])
+const availableLocations = ref<Location[]>([])
 const isLoading = ref<Boolean>(false)
 
 const autocomplete = async () => {
+  availableLocations.value = []
   isLoading.value = true
   await fetch(apiUrl + 'extra/search/' + input.value)
     .then((res) => res.json())
@@ -35,6 +52,16 @@ const debouncedInput = debounce(autocomplete)
 
 <style scoped lang="scss">
 .search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  justify-content: flex-start;
+
+  gap: 10px;
+  padding: 50px 30px;
+  min-height: 200px;
+
   &__bar {
     height: 30px;
     min-width: 20rem;
@@ -49,6 +76,21 @@ const debouncedInput = debounce(autocomplete)
 
     &:focus {
       outline: none;
+    }
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+
+    .location {
+      color: lightcyan;
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline 1px wheat;
+      }
     }
   }
 }
