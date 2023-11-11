@@ -12,6 +12,7 @@ const currBackground = 'snow.jpg'
 .wrapper {
   display: grid;
   grid-template-columns: 60% 40%;
+  height: 100vh;
 }
 .snow {
   background-size: cover;
