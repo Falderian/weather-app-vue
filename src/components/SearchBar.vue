@@ -4,14 +4,14 @@
       v-model="input"
       type="text"
       :class="`search__bar ${isLoading && 'anim-pulse'}`"
-      :placeholder="'Search location'"
+      :placeholder="location?.name || 'Search location'"
       @input="debouncedInput"
     />
     <Transition name="list">
       <div v-if="availableLocations.length" class="container fade-out">
         <span
           v-for="location in availableLocations"
-          :key="location.id"
+          :key="location.name"
           @click="handleSelection(location)"
           class="location"
           >{{ location.name + ', ' + (location.region || location.country) }}</span
@@ -27,18 +27,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import type { TLocation } from '@/utils/types'
+import type { ILocation } from '@/utils/types'
 import { debounce } from '@/utils/utils'
-import { useLocationStore } from '@/stores/location'
 import Api from '@/utils/api'
-import { useWeatherStore } from '../stores/weather'
+import { useLocationStore } from '@/stores/location'
+import { useWeatherStore } from '@/stores/weather'
 
 const { location, setLocation } = useLocationStore()
 
 const { resetWeather } = useWeatherStore()
 
 const input = ref('')
-const availableLocations = ref<TLocation[]>([])
+const availableLocations = ref<ILocation[]>([])
 const isLoading = ref<Boolean>(false)
 
 const autocomplete = async () => {
@@ -49,7 +49,7 @@ const autocomplete = async () => {
   loading()
 }
 
-const handleSelection = async (selectedLocation: TLocation) => {
+const handleSelection = async (selectedLocation: ILocation) => {
   loading()
   resetWeather()
   await setLocation(selectedLocation)
@@ -63,23 +63,21 @@ const debouncedInput = debounce(autocomplete)
 const loading = () => (isLoading.value = !isLoading.value)
 
 const locationOrErr = () => {
-  return !availableLocations.value.length && !isLoading.value && !input.value && !location
+  return !availableLocations.value.length && !input.value
 }
 </script>
 
 <style scoped lang="scss">
 .search {
-  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  gap: 10px;
-  padding: 50px 30px;
-  min-height: 200px;
+  gap: 1rem;
+  padding: 3rem 2rem 0;
 
   &__bar {
-    min-width: 20rem;
+    min-width: 100%;
 
     border: none;
     border-bottom: 1px solid #fff;
@@ -95,18 +93,19 @@ const locationOrErr = () => {
     }
   }
   .container {
+    position: absolute;
     display: flex;
     flex-direction: column;
-    position: absolute;
     z-index: 2;
-    min-width: 20rem;
 
-    margin-top: 22px;
-    padding: 10px 0px;
+    min-width: calc(100% - 4rem);
+
+    margin-top: 24px;
+    padding: 1rem 0px;
 
     border: 1px solid #fff;
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 0px 0px 20px 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 0px 0px 1rem 1rem;
 
     animation: fade-in 1s;
 

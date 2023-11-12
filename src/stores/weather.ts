@@ -1,23 +1,17 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import type { TWeather } from '@/utils/types'
-import { useLocationStore } from './location'
-import Api from '@/utils/api'
+import type { IWeather } from '@/utils/types'
 
 export const useWeatherStore = defineStore('weatherStore', () => {
-  const locationStore = useLocationStore()
-  const weather = ref<TWeather>()
+  const weather = ref<IWeather>()
 
-  const setWeather = (newWeather: TWeather) => {
+  const getCurentWeather = () => weather.value!.current
+  const getForecastWeather = () => weather.value!.forecast
+
+  const setWeather = (newWeather: IWeather) => {
     weather.value = newWeather
   }
 
-  const resetWeather = () => (weather.value = {} as TWeather)
-
-  locationStore.$onAction(({ name, after }) => {
-    if (name === 'setLocation')
-      after(async (location) => setWeather(await Api.getCurrWeather(location.name)))
-  })
-
-  return { weather, setWeather, resetWeather }
+  const resetWeather = () => (weather.value = {} as IWeather)
+  return { weather, setWeather, getCurentWeather, getForecastWeather, resetWeather }
 })

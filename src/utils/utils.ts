@@ -1,3 +1,5 @@
+import type { Ref } from 'vue'
+
 const debounce = (func: Function, timeout = 500) => {
   let timer: number
   return (...args: any) => {
@@ -9,7 +11,6 @@ const debounce = (func: Function, timeout = 500) => {
 }
 
 const formatDate = (date: string) => {
-  console.log(date)
   const options = {
     weekday: 'short',
     year: 'numeric',

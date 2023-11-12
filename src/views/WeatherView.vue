@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="wrapper">
     <WeatherWidget />
   </div>
 </template>
@@ -9,7 +9,7 @@ import WeatherWidget from '@/components/WeatherWidget.vue'
 </script>
 
 <style scoped lang="scss">
-.container {
+.wrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
