@@ -12,6 +12,12 @@ body {
   background-color: lightslategray;
 }
 
+.icon {
+  display: flex;
+  width: 35px;
+  height: 35px;
+}
+
 .list-enter-active,
 .list-leave-active {
   transition: all 2s linear;
@@ -59,12 +65,29 @@ body {
   }
 }
 
+@keyframes focus {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    border-bottom: 1px solid red;
+    color: red;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .invisible {
   opacity: 0;
   z-index: 0;
 }
 
 .anim-pulse {
-  animation: pulse 1s linear reverse;
+  animation: pulse 2s linear;
   animation-iteration-count: 2;
+}
+
+.anim-focus {
+  animation: focus 2s linear infinite;
 }

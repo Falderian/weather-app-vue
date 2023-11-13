@@ -5,7 +5,7 @@ import { useWeatherStore } from './weather'
 import Api from '@/utils/api'
 
 export const useLocationStore = defineStore('locationStore', () => {
-  const { setWeather } = useWeatherStore()
+  const { setWeather, resetWeather } = useWeatherStore()
 
   const location = ref<ILocation>()
   const setLocation = async (newLocation: ILocation) => {
@@ -14,6 +14,7 @@ export const useLocationStore = defineStore('locationStore', () => {
   }
 
   const resetLocation = () => {
+    resetWeather()
     location.value = {} as ILocation
   }
 

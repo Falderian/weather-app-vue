@@ -1,7 +1,7 @@
 <template>
-  <Transition name="list">
+  <TransitionGroup name="list">
     <section v-if="weather?.current" :class="`weather_widget ${!weather ? 'reset' : 'anim-pulse'}`">
-      <div class="degrees">{{ weather!.current.feelslike_c }}&deg;</div>
+      <div class="degrees">{{ weather!.current.temp_c }}&deg;</div>
       <div class="location">
         <div class="location__name">{{ weather.location.name }}</div>
         <div class="location__time">
@@ -10,16 +10,19 @@
       </div>
       <img :src="weather.current.condition.icon" class="weather_icon" />
     </section>
-  </Transition>
+    <ForecastWeather v-if="weather?.forecast" :forecast-weather="weather.forecast" />
+  </TransitionGroup>
 </template>
 
 <script setup lang="ts">
 import { useWeatherStore } from '@/stores/weather'
+import { type IWeather } from '@/utils/types'
 import { formatDate } from '@/utils/utils'
 import { ref } from 'vue'
+import ForecastWeather from './ForecastWeather.vue'
 
 const weatherStore = useWeatherStore()
-const weather = ref()
+const weather = ref<IWeather>()
 
 weatherStore.$subscribe(() => {
   weather.value = weatherStore.weather

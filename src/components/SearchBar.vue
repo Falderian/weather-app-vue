@@ -3,8 +3,9 @@
     <input
       v-model="input"
       type="text"
-      :class="`search__bar ${isLoading && 'anim-pulse'}`"
-      :placeholder="location?.name || 'Search location'"
+      :class="`search__bar ${inputClasses}`"
+      :placeholder="'Search location'"
+      autofocus="true"
       @input="debouncedInput"
     />
     <Transition name="list">
@@ -18,40 +19,45 @@
         >
       </div>
     </Transition>
-    <div :class="locationOrErr() ? 'error' : 'invisible'">
+    <div :class="hasError ? 'error' : 'invisible'">
       There is no place with that name, please try another.
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import type { ILocation } from '@/utils/types'
 import { debounce } from '@/utils/utils'
 import Api from '@/utils/api'
 import { useLocationStore } from '@/stores/location'
-import { useWeatherStore } from '@/stores/weather'
 
-const { location, setLocation } = useLocationStore()
-
-const { resetWeather } = useWeatherStore()
+const { setLocation, resetLocation } = useLocationStore()
 
 const input = ref('')
+const hasError = ref(false)
 const availableLocations = ref<ILocation[]>([])
 const isLoading = ref<Boolean>(false)
+
+const inputClasses = computed(() => {
+  if (isLoading.value) return 'anim-pulse'
+  if (!input.value) return 'anim-focus'
+  return ''
+})
 
 const autocomplete = async () => {
   availableLocations.value = []
   if (!input.value) return
   loading()
   availableLocations.value = await Api.searchLocation(input.value)
+  hasError.value = locationOrErr()
   loading()
 }
 
 const handleSelection = async (selectedLocation: ILocation) => {
   loading()
-  resetWeather()
+  resetLocation()
   await setLocation(selectedLocation)
   input.value = selectedLocation.name
   availableLocations.value = []
@@ -62,9 +68,7 @@ const debouncedInput = debounce(autocomplete)
 
 const loading = () => (isLoading.value = !isLoading.value)
 
-const locationOrErr = () => {
-  return !availableLocations.value.length && !input.value
-}
+const locationOrErr = () => !(availableLocations.value.length && input.value && isLoading)
 </script>
 
 <style scoped lang="scss">
@@ -74,7 +78,7 @@ const locationOrErr = () => {
   align-items: center;
 
   gap: 1rem;
-  padding: 3rem 2rem 0;
+  padding-top: 1rem;
 
   &__bar {
     min-width: 100%;
@@ -92,6 +96,10 @@ const locationOrErr = () => {
       outline: none;
     }
   }
+
+  .selected {
+    border-bottom: 1px solid greenyellow;
+  }
   .container {
     position: absolute;
     display: flex;
@@ -101,7 +109,7 @@ const locationOrErr = () => {
     min-width: calc(100% - 4rem);
 
     margin-top: 24px;
-    padding: 1rem 0px;
+    padding: 0.5rem 0px;
 
     border: 1px solid #fff;
     background-color: rgba(0, 0, 0, 0.7);

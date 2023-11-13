@@ -129,4 +129,4 @@ interface IHour {
   uv: number
 }
 
-export type { IWeather, ILocation, ICurrentWeather, IForecast, IDay }
+export type { IWeather, ILocation, ICurrentWeather, IForecast, IForecastday, IDay }
