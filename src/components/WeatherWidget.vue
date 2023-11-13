@@ -1,24 +1,26 @@
 <template>
   <TransitionGroup name="list">
-    <section v-if="weather?.current" :class="`weather_widget ${!weather ? 'reset' : 'anim-pulse'}`">
-      <div class="degrees">{{ weather!.current.temp_c }}&deg;</div>
-      <div class="location">
-        <div class="location__name">{{ weather.location.name }}</div>
-        <div class="location__time">
-          {{ formatDate(weather.current.last_updated) }}
+    <template v-if="weather?.forecast && weather.current">
+      <section :class="`weather_widget ${!weather ? 'reset' : 'anim-pulse'}`">
+        <div class="degrees">{{ weather!.current.temp_c }}&deg;</div>
+        <div class="location">
+          <div class="location__name">{{ weather.location.name }}</div>
+          <div class="location__time">
+            {{ formatDate(weather.current.last_updated) }}
+          </div>
         </div>
-      </div>
-      <img :src="weather.current.condition.icon" class="weather_icon" />
-    </section>
-    <ForecastWeather v-if="weather?.forecast" :forecast-weather="weather.forecast" />
+        <img :src="weather.current.condition.icon" class="weather_icon" />
+      </section>
+      <ForecastWeather :forecast-weather="weather.forecast" />
+    </template>
   </TransitionGroup>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useWeatherStore } from '@/stores/weather'
 import { type IWeather } from '@/utils/types'
 import { formatDate } from '@/utils/utils'
-import { ref } from 'vue'
 import ForecastWeather from './ForecastWeather.vue'
 
 const weatherStore = useWeatherStore()

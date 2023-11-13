@@ -129,4 +129,15 @@ interface IHour {
   uv: number
 }
 
-export type { IWeather, ILocation, ICurrentWeather, IForecast, IForecastday, IDay }
+type TAverageItem = { icon: string; value: string; fill?: string }
+
+export type {
+  IWeather,
+  ILocation,
+  ICurrentWeather,
+  IForecast,
+  IForecastday,
+  IDay,
+  IAstro,
+  TAverageItem
+}

@@ -11,7 +11,7 @@ const currBackground = 'snow.jpg'
 <style scoped>
 .wrapper {
   display: grid;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 68% 32%;
   height: 100vh;
 }
 .snow {
