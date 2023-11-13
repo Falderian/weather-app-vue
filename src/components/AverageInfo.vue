@@ -8,24 +8,21 @@
 </template>
 
 <script setup lang="ts">
+import type { TAverageItem } from '@/utils/types'
 import DynamicIcon from './icons/DynamicIcon.vue'
 
-type TData = { icon: string; value: string | number; fill?: string }[]
-
-const { data } = defineProps<{ data: TData }>()
+const { data } = defineProps<{ data: TAverageItem[] }>()
 </script>
 
 <style lang="scss" scoped>
 .container {
   display: flex;
-
-  gap: 0.5rem;
+  gap: 1rem;
 
   &__item {
     display: flex;
     align-items: center;
 
-    padding: 0.3rem;
     gap: 0.3rem;
   }
 
@@ -34,7 +31,7 @@ const { data } = defineProps<{ data: TData }>()
     left: 0;
     bottom: 0;
     height: 80%;
-    width: 1px; /* or 100px */
+    width: 1px;
 
     border-left: 1px solid lightgreen;
   }
@@ -44,7 +41,7 @@ const { data } = defineProps<{ data: TData }>()
     right: 0;
     bottom: 0;
     height: 80%;
-    width: 1px; /* or 100px */
+    width: 1px;
 
     border-right: 1px solid lightgreen;
   }

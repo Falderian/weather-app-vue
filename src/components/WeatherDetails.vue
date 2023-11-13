@@ -1,13 +1,11 @@
 <template>
   <section class="wrapper">
     <section class="details">
-      <span class="details__weather"
-        >CURRENT CONTIDITIONS: {{ weather!.current.condition.text }}</span
-      >
+      <span class="details__weather">Conditions: {{ weather!.current.condition.text }}</span>
       <div v-for="item in weatherValues" :key="item.key" class="grid">
         <span>{{ item.text }}</span>
-        <text>{{ weather.current[item.key as keyof ICurrentWeather] + ' ' + item.mesure }} </text
-        ><DynamicIcon :icon-name="item.icon" />
+        <text>{{ weather.current[item.key as keyof ICurrentWeather] + ' ' + item.mesure }} </text>
+        <DynamicIcon :icon-name="item.icon" />
       </div>
     </section>
   </section>
