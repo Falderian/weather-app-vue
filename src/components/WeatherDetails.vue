@@ -1,24 +1,26 @@
 <template>
   <section class="wrapper">
-    <h3>Weather details...</h3>
     <section class="details">
-      <span class="details__weather">Weather condition: {{ weather!.current.condition.text }}</span>
+      <span class="details__weather"
+        >CURRENT CONTIDITIONS: {{ weather!.current.condition.text }}</span
+      >
       <div v-for="item in weatherValues" :key="item.key" class="grid">
         <span>{{ item.text }}</span>
-        <span
-          >{{ weather.current[item.key] + ' ' + item.mesure }} <DynamicIcon :icon-name="item.icon"
-        /></span>
+        <text>{{ weather.current[item.key as keyof ICurrentWeather] + ' ' + item.mesure }} </text
+        ><DynamicIcon :icon-name="item.icon" />
       </div>
     </section>
   </section>
 </template>
 
 <script setup lang="ts">
-import type { IWeather } from '@/utils/types'
+import type { ICurrentWeather, IWeather } from '@/utils/types'
 import DynamicIcon from './icons/DynamicIcon.vue'
 
 const { weather } = defineProps<{ weather: IWeather }>()
+
 const weatherValues = [
+  { key: 'feelslike_c', text: 'Feels like', mesure: '\u00B0', icon: 'Thermometer' },
   { key: 'wind_kph', text: 'Wind', mesure: 'km/h', icon: 'Wind' },
   { key: 'pressure_mb', text: 'Pressure', mesure: 'Pa', icon: 'Pressure' },
   { key: 'humidity', text: 'Humidity', mesure: '%', icon: 'Humidity' },
@@ -34,8 +36,6 @@ const weatherValues = [
   flex-direction: column;
   gap: 2rem;
 
-  padding: 1rem 2rem;
-
   .details {
     display: flex;
     flex-direction: column;
@@ -45,16 +45,15 @@ const weatherValues = [
     border-bottom: 1px solid #fff;
     .grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 4fr 2fr 0fr;
+      gap: 0.5rem;
 
       span:first-child {
         color: rgba(255, 255, 255, 0.7);
       }
 
-      span {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+      text {
+        text-align: end;
       }
     }
 

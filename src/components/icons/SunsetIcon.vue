@@ -1,0 +1,16 @@
+<template>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="22" id="sunset">
+    <g
+      fill="white"
+      fill-rule="evenodd"
+      stroke="#fff"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+    >
+      <path
+        d="M17 17a5 5 0 0 0-10 0M12 8V1M4.22 9.22l1.42 1.42M1 17h2M21 17h2M18.36 10.64l1.42-1.42M23 21H1M16 4l-4 4-4-4"
+      />
+    </g>
+  </svg>
+</template>
