@@ -1,10 +1,10 @@
 <template>
-  <section class="forecast">
-    <div v-for="item in hoursToDisplay" :key="item.time" class="forecast__item">
+  <section class="forecast_days">
+    <div v-for="item in hoursToDisplay" :key="item.time" class="forecast_days__item">
       <text>{{ item.time.substring(item.time.length - 5) }}</text>
       <img :src="item.condition.icon" class="weather_icon" />
-      <text>{{ item.temp_c }}&deg;</text>
       <DynamicIcon icon-name="Thermometer" />
+      <text>{{ item.temp_c }}&deg;</text>
     </div>
   </section>
 </template>
@@ -20,17 +20,15 @@ const hoursToDisplay = today ? day.hour.slice(currTime) : day.hour
 </script>
 
 <style lang="scss" scoped>
-.forecast {
-  display: flex;
-  width: fit-content;
+.forecast_days {
+  display: grid;
+  grid-template: auto / repeat(8, 1fr);
   max-width: 100%;
 
-  gap: 1rem;
-  padding: 0.5rem;
-  flex-wrap: wrap;
+  background: transparent;
 
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: invert(20%);
+  color: black;
+  grid-gap: 3px;
 
   &__item {
     display: grid;
@@ -40,6 +38,9 @@ const hoursToDisplay = today ? day.hour.slice(currTime) : day.hour
 
     padding: 0 0.5rem;
     gap: 0.5rem;
+
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    color: black;
 
     .weather_icon {
       height: 35px;
