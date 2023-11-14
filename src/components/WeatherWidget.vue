@@ -2,15 +2,16 @@
   <TransitionGroup name="list">
     <template v-if="weather?.forecast && weather.current">
       <section :class="`weather_widget ${!weather ? 'reset' : 'anim-pulse'}`">
-        <div class="degrees">{{ weather!.current.temp_c }}&deg;</div>
+        <span class="degrees">{{ weather!.current.temp_c }}&deg;</span>
         <div class="location">
-          <div class="location__name">{{ weather.location.name }}</div>
+          <span class="location__name">{{ weather.location.name }}</span>
           <div class="location__time">
             {{ formatDate(weather.current.last_updated) }}
           </div>
         </div>
         <img :src="weather.current.condition.icon" class="weather_icon" />
       </section>
+
       <ForecastWeather :forecast-weather="weather.forecast" />
     </template>
   </TransitionGroup>

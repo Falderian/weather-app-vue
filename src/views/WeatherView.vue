@@ -13,7 +13,9 @@ import WeatherWidget from '@/components/WeatherWidget.vue'
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   padding-right: 4rem;
+  gap: 1rem;
 
   height: 100%;
 }

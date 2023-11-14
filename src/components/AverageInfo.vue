@@ -2,7 +2,7 @@
   <section class="container">
     <div v-for="item in data" :key="item.value" class="container__item">
       <DynamicIcon :icon-name="item.icon" :fill="item.fill" />
-      <span :class="`${item.value > '70%' && 'warning'}`">{{ item.value }}</span>
+      <span :class="`${+item.value.replace('%', '') > 70 && 'warning'}`">{{ item.value }}</span>
     </div>
   </section>
 </template>
