@@ -1,6 +1,6 @@
 <template>
   <section class="forecast_days">
-    <div v-for="item in hoursToDisplay" :key="item.time" class="forecast_days__item">
+    <div v-for="item in hoursToDisplay" :key="item.time" class="forecast_days__item bg-semi-black">
       <text>{{ item.time.substring(item.time.length - 5) }}</text>
       <img :src="item.condition.icon" class="weather_icon" />
       <DynamicIcon icon-name="Thermometer" />
@@ -39,7 +39,6 @@ const hoursToDisplay = today ? day.hour.slice(currTime) : day.hour
     padding: 0 0.5rem;
     gap: 0.5rem;
 
-    background-color: rgba($color: #000000, $alpha: 0.5);
     color: black;
 
     .weather_icon {

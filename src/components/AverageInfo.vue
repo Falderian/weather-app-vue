@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section class="container bg-semi-black">
     <div v-for="item in data" :key="item.value" class="container__item">
       <DynamicIcon :icon-name="item.icon" :fill="item.fill" />
       <span :class="`${+item.value.replace('%', '') > 70 && 'warning'}`">{{ item.value }}</span>
@@ -17,6 +17,9 @@ const { data } = defineProps<{ data: TAverageItem[] }>()
 <style lang="scss" scoped>
 .container {
   display: flex;
+  width: fit-content;
+
+  padding: 0.5rem;
   gap: 1rem;
 
   &__item {
