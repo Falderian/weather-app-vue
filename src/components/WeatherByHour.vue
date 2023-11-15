@@ -22,7 +22,7 @@ const hoursToDisplay = today ? day.hour.slice(currTime) : day.hour
 <style lang="scss" scoped>
 .forecast_days {
   display: grid;
-  grid-template: auto / repeat(8, 1fr);
+  grid-template: auto / repeat(7, 1fr);
   max-width: 100%;
 
   background: transparent;
@@ -48,6 +48,12 @@ const hoursToDisplay = today ? day.hour.slice(currTime) : day.hour
     .info {
       display: flex;
     }
+  }
+}
+
+@media (max-width: 1100px) {
+  .forecast_days {
+    grid-template: auto / repeat(5, 1fr);
   }
 }
 </style>
